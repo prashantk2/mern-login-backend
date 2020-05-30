@@ -8,7 +8,7 @@
     "start": "node server.js",
     "server": "nodemon server.js"
   },
-  "author": "Prashant Kumar<prashantbtech.cs@gmail.com>",
+  "author": "Prashant Kumar<prashantk2@dewsolutions.in>",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",

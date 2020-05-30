@@ -4,7 +4,6 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const keys = require("../../config/keys");
-
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 
@@ -83,23 +82,29 @@ router.post("/login", (req, res) => {
 });
 
 router.get('/userDetails', verifyToken, (req, res) => {
-  const userDetails = User.findById(res.locals.userId);
-  userDetails.exec((err, doc) => {
-    if (err) {
-      res.json({
-        success: false,
-        error: `Unable to load data`
-      });
-    } else {
-      res.json({
-        success: true,
-        id: doc._id,
-        name: doc.name,
-        email: doc.email
-      })
-    }
-  })
-
+  try {
+    const userDetails = User.findById(res.locals.userId);
+    userDetails.exec((err, doc) => {
+      if (err) {
+        res.json({
+          success: false,
+          error: `Unable to load data`
+        });
+      } else {
+        res.json({
+          success: true,
+          id: doc._id,
+          name: doc.name,
+          email: doc.email
+        })
+      }
+    }) 
+  } catch (error) {
+    res.json({
+      success: false,
+      error: `Unable to load data`
+    });
+  }
 });
 
 function verifyToken(req, res, next) {
@@ -111,7 +116,7 @@ function verifyToken(req, res, next) {
     jwt.verify(req.token, 'secret', function (err, decoded) {
       if (err) {
         return res.json({
-          status: 200,
+          status: 401,
           success: false,
           error: 'Invalid Token'
         })
@@ -124,5 +129,29 @@ function verifyToken(req, res, next) {
     res.sendStatus(403)
   }
 }
+
+router.get('/listOfAllUsers', verifyToken, (req, res) => {
+  try {
+    const userDetails = User.find();
+    userDetails.exec((err, doc) => {
+      if (err) {
+        res.status(400).send({
+          success: false,
+          error: `Unable to load data`
+        });
+      } else {
+        res.status(200).send({
+          success: true,
+          data: doc
+        })
+      }
+    }) 
+  } catch (error) {
+    res.status(400).send({
+      success: false,
+      error: `Unable to load data`
+    });
+  }
+});
 
 module.exports = router;
