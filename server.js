@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cors = require('cors');
 const bodyParser = require("body-parser");
 const passport = require("passport");
+const indexRouter = require("./routes")
 const users = require("./routes/api/users");
 
 // DB Config
@@ -31,6 +32,7 @@ app.use(passport.initialize());
 // Passport config
 require("./config/passport")(passport);
 // Routes
+app.use("/",indexRouter)
 app.use("/api/users", users);
 
 const port = 5000;
