@@ -29,7 +29,7 @@ app.use(cors());
 
 // Passport middleware
 app.use(passport.initialize());
-// Passport config
+// Passport configuration
 require("./config/passport")(passport);
 // Routes
 app.use("/",indexRouter)
