@@ -1,7 +1,0 @@
-heroku:
- stage: deploy
- only:
- - master
- script:
- - git remote add heroku https://heroku:1fd6015e-42fe-4095-8283-c45e1c7dfbab@git.heroku.com/mern-login-backend.git
- - git push -f heroku master
