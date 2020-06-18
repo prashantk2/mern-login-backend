@@ -93,9 +93,7 @@ router.get('/userDetails', verifyToken, (req, res) => {
       } else {
         res.json({
           success: true,
-          id: doc._id,
-          name: doc.name,
-          email: doc.email
+          data: doc
         })
       }
     }) 
@@ -153,5 +151,81 @@ router.get('/listOfAllUsers', verifyToken, (req, res) => {
     });
   }
 });
+
+router.get('/getSingleUser/:id', verifyToken, (req, res) => {
+  try {
+    const userDetails = User.findById(req.params.id);
+    userDetails.exec((err, doc) => {
+      if (err) {
+        if(err.name === 'CastError') {
+          res.status(400).send({
+            success: false,
+            error: `Invalid user Id.`
+          });
+        } else {
+          res.status(400).send({
+            success: false,
+            error: `Unable to load data`
+          });
+        }
+      } else {
+        res.status(200).send({
+          success: true,
+          data: doc
+        })
+      }
+    }) 
+  } catch (error) {
+    res.status(400).send({
+      success: false,
+      error: `Unable to load data`
+    });
+  }
+});
+
+router.post('/update-user/:id',  (req, res) => {
+  try{
+
+    const userId = req.params.id;
+    if(typeof userId === undefined || userId === '') {
+      res.status(400).send({
+        success: false,
+        error: `Invalid user Id.`
+      });
+    }
+    const userDetails = User.findById(req.params.id);
+    userDetails.exec((err, doc) => {
+      if (err) {
+        res.status(400).send({
+          success: false,
+          error: `Unable to load data`
+        })
+      } else {
+        User.findByIdAndUpdate(
+          userId,
+          req.body,
+          (err) => {
+            if(err) {
+              res.status(400).send({
+                success: false,
+                error: `Unable to load data`
+              });
+            } else {
+              res.status(200).send({
+                success: true,
+                data: doc
+              })
+            }
+          }
+        )
+      }
+    })
+  } catch(error) {
+    res.status(400).send({
+      success: false,
+      error: `Unable to load data`
+    });
+  }
+})
 
 module.exports = router;

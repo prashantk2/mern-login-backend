@@ -18,6 +18,7 @@ app.use(
   })
 ); 
 app.use(bodyParser.json());
+app.disable( 'X-Powered-By' );
 
 // Connect to MongoDB
 mongoose

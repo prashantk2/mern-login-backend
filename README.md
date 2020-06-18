@@ -11,13 +11,13 @@ This is a demo app for showing login, registration and list of registered users.
 ## Source Code Link
     
 - FrontEnd:- https://gitlab.com/prashantk2/mern-login-front
-- BackEnd:- https://gitlab.com/prashantk2/mern-login-backend
+- BackEnd:- https://github.com/prashantk2/mern-login-backend
 
 ## APP Hosting
 The app(both frontEnd and backEnd) is hosted on Netlify. Database is hosted on MongoDB Atlas cloud.
 
 - FrontEnd Link:- https://mern-login-demo.netlify.app
-- BackEnd Link:- https://mern-login-backend.netlify.app
+- BackEnd Link:- https://mern-login-backend.herokuapp.com
 
 ## APP Summary
 ##### List of pages of the App
